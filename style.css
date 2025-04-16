@@ -1,0 +1,173 @@
+/* Estilos Generales */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f4f4; /* Fondo gris claro */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el footer quede abajo */
+    line-height: 1.6;
+}
+
+.container {
+    background-color: #ffffff; /* Fondo blanco para el contenido central */
+    padding: 25px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%; /* Responsive */
+    margin: 40px auto; /* Centrado horizontal y espacio arriba/abajo */
+    flex-grow: 1; /* Empuja el footer hacia abajo */
+}
+
+header h1 {
+    color: #0056b3; /* Un azul profesional */
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Alinea labels a la izquierda */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    font-size: 1em;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+button {
+    background-color: #007bff; /* Azul primario */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Botón ancho */
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Área de Resultado */
+.result-area {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.result-area label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+textarea[readonly] {
+    background-color: #e9ecef; /* Fondo ligeramente gris para indicar solo lectura */
+    cursor: text; /* Permite seleccionar texto */
+    resize: none; /* Evita que el usuario cambie el tamaño */
+}
+
+.result-area small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.warning {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.warning strong {
+    font-weight: bold;
+}
+
+
+/* Footer */
+.page-footer {
+    background-color: #dcdcdc; /* Gris un poco más oscuro para el footer */
+    padding: 15px 0;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer al fondo */
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex; /* Para alinear imagen y texto si se desea */
+    flex-direction: column; /* Apilados por defecto */
+    align-items: center;
+}
+
+.footer-content img {
+    margin-bottom: 10px;
+    max-height: 40px; /* Limita altura de la imagen */
+    width: auto;
+}
+
+.footer-content p {
+    margin: 0;
+    color: #333;
+}
+
+.footer-content a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries para Responsividad (Opcional, pero recomendado) */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
