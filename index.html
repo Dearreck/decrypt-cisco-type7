@@ -3,32 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Vulnerabilidad Cisco Type 7</title>
-    <style> /* Estilos básicos opcionales */
-        body { font-family: sans-serif; padding: 20px; }
-        label, input, button { display: block; margin-bottom: 10px; }
-        input { width: 300px; }
-        #resultado { font-weight: bold; color: blue; }
-        .warning { color: red; font-weight: bold; margin-top: 20px; }
-    </style>
+    <title>Descifrador Cisco Type 7</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Demostración Vulnerabilidad Cifrado Cisco Type 7</h1>
-    <p>Introduce una contraseña cifrada con Type 7 (ej: 08325F4D0A16545440):</p>
+    <div class="container">
+        <header>
+            <h1>Descifrador de Contraseña Cisco Type 7</h1>
+        </header>
+        <main>
+            <form id="decodeForm">
+                <div class="form-group">
+                    <label for="type7Input">Contraseña Type 7 Cifrada:</label>
+                    <input type="text" id="type7Input" name="type7Input" placeholder="Pega aquí la contraseña cifrada" required>
+                </div>
+                <button type="submit" id="decodeButton">Descubrir</button>
+            </form>
+            <div class="result-area">
+                <label for="resultOutput">Contraseña Descifrada:</label>
+                <textarea id="resultOutput" rows="3" readonly placeholder="Aquí aparecerá el resultado..."></textarea>
+                <small>Puedes seleccionar y copiar el texto de este campo.</small>
+                 <p class="warning">
+                    <strong>Nota Importante:</strong> El cifrado Cisco Type 7 es débil y reversible. No debe considerarse seguro para proteger información sensible.
+                 </p>
+            </div>
+        </main>
+    </div>
 
-    <label for="encryptedPass">Contraseña Cifrada:</label>
-    <input type="text" id="encryptedPass" placeholder="Pega aquí la contraseña Type 7">
-
-    <button onclick="descifrarContrasena()">Descifrar</button>
-
-    <p>Contraseña Descifrada:</p>
-    <pre id="resultado"></pre>
-
-    <p class="warning">
-        ¡Advertencia! El cifrado Cisco Type 7 es inseguro y fácilmente reversible.
-        Esta herramienta es solo para fines educativos y de demostración.
-        No uses Type 7 para proteger información sensible. Usa métodos de cifrado más fuertes (Type 5, 8, 9 o preferiblemente `enable secret`).
-    </p>
+    <footer class="page-footer">
+        <div class="footer-content">
+            <img src="placeholder-image.png" alt="Logo o Imagen Descriptiva" width="50">
+            <p>
+                <a href="#" target="_blank" rel="noopener noreferrer">¡Únete a mi canal de Telegram!</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
