@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Vulnerabilidad Cisco Type 7</title>
+    <style> /* Estilos básicos opcionales */
+        body { font-family: sans-serif; padding: 20px; }
+        label, input, button { display: block; margin-bottom: 10px; }
+        input { width: 300px; }
+        #resultado { font-weight: bold; color: blue; }
+        .warning { color: red; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Demostración Vulnerabilidad Cifrado Cisco Type 7</h1>
+    <p>Introduce una contraseña cifrada con Type 7 (ej: 08325F4D0A16545440):</p>
+
+    <label for="encryptedPass">Contraseña Cifrada:</label>
+    <input type="text" id="encryptedPass" placeholder="Pega aquí la contraseña Type 7">
+
+    <button onclick="descifrarContrasena()">Descifrar</button>
+
+    <p>Contraseña Descifrada:</p>
+    <pre id="resultado"></pre>
+
+    <p class="warning">
+        ¡Advertencia! El cifrado Cisco Type 7 es inseguro y fácilmente reversible.
+        Esta herramienta es solo para fines educativos y de demostración.
+        No uses Type 7 para proteger información sensible. Usa métodos de cifrado más fuertes (Type 5, 8, 9 o preferiblemente `enable secret`).
+    </p>
+
+    <script src="script.js"></script>
+</body>
+</html>
