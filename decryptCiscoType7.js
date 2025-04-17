@@ -1,74 +1,71 @@
-/**
- * La clave XOR constante utilizada por el cifrado Cisco Tipo 7.
- * Asegúrate de que esta constante esté definida en el mismo ámbito
- * o uno superior a donde se llama la función.
- */
-const XOR_KEY = "dsfd;kfoA,.iyewrkldJKD;-&]a(%/";
+document.addEventListener('DOMContentLoaded', () => {
+    const decodeForm = document.getElementById('decodeForm');
+    const type7Input = document.getElementById('type7Input');
+    const resultOutput = document.getElementById('resultOutput');
 
-/**
- * Descifra un hash de contraseña Cisco Tipo 7.
- * @param {string} encryptedHash - La cadena hash cifrada Cisco Tipo 7.
- * @returns {string} La contraseña descifrada en texto plano.
- * @throws {Error} Si la entrada es inválida o el descifrado falla
- * (ej: formato incorrecto, índice fuera de rango).
- */
-function decryptCiscoType7(encryptedHash) {
-    // --- Validación de Entrada ---
-    if (typeof encryptedHash !== 'string' || encryptedHash === "") {
-        throw new Error("La entrada debe ser una cadena de texto no vacía.");
-    }
-    const hashLen = encryptedHash.length;
-    if (hashLen < 4) {
-        throw new Error("El hash cifrado es demasiado corto (mínimo 4 caracteres).");
-    }
-    if (hashLen % 2 !== 0) {
-        throw new Error("El hash cifrado debe tener una longitud par.");
-    }
+    // La clave de Vigenere utilizada por Cisco Type 7 (conocida públicamente)
+    // const XOR_KEY = "dsfd;kfoA,.iyewrkldJKD;-&]a(%/";
+    const vigenereKey = [
+        0x64, 0x73, 0x66, 0x64, 0x3b, 0x6b, 0x66, 0x6f, 0x41, 0x2c, 0x2e,
+        0x69, 0x79, 0x65, 0x77, 0x72, 0x6b, 0x6c, 0x64, 0x4a, 0x4b, 0x44,
+        0x48, 0x53, 0x55, 0x42, 0x73, 0x67, 0x76, 0x63, 0x61, 0x36, 0x39,
+        0x38, 0x33, 0x34, 0x6e, 0x63, 0x78, 0x76, 0x39, 0x38, 0x37, 0x33,
+        0x32, 0x35, 0x34, 0x6b, 0x66, 0x67, 0x38, 0x37
+    ];
 
-    // --- Extracción y Conversión del Índice Inicial ---
-    const startIndexHex = encryptedHash.substring(0, 2);
-    // parseInt devuelve NaN en caso de fallo
-    const startIndex = parseInt(startIndexHex, 16);
-    if (isNaN(startIndex)) {
-        throw new Error(`Índice inicial hexadecimal inválido: '${startIndexHex}'.`);
-    }
-    let currentIndex = startIndex; // Usar let ya que se incrementará
-
-    // --- Bucle de Descifrado ---
-    const hexPairsStr = encryptedHash.substring(2);
-    let decryptedPassword = ""; // Usar concatenación simple de cadenas
-
-    for (let i = 0; i < hexPairsStr.length; i += 2) {
-        // Extraer el par hexadecimal actual
-        const hexPair = hexPairsStr.substring(i, i + 2);
-
-        // --- Verificación de Límites del Índice de la Clave ---
-        if (currentIndex >= XOR_KEY.length) {
-            throw new Error(`Índice calculado (${currentIndex}) fuera de los límites de la clave XOR (longitud ${XOR_KEY.length}).`);
+    // Función para decodificar la contraseña Type 7
+    function decodeType7(encrypted) {
+        // Validar formato básico (longitud mínima y caracteres hexadecimales)
+        if (!encrypted || encrypted.length < 4 || !/^[0-9a-fA-F]+$/.test(encrypted)) {
+             // Podríamos ser más específicos, pero esto cubre la mayoría de errores iniciales
+             // Si la longitud es impar después de los dos primeros caracteres, también es inválido
+             if (encrypted && encrypted.length > 2 && (encrypted.length - 2) % 2 !== 0) {
+                return 'Error: Longitud de la parte cifrada inválida (debe ser par).';
+             }
+            return 'Error: Formato de contraseña Type 7 inválido.';
         }
 
-        // --- Obtener Valores para el XOR ---
-        // Obtener el código ASCII/Unicode del carácter de la clave
-        const keyCharCode = XOR_KEY.charCodeAt(currentIndex);
+        try {
+            // El primer par de caracteres hexadecimales indica el índice inicial en la clave Vigenere
+            const startIndexHex = encrypted.substring(0, 2);
+            let startIndex = parseInt(startIndexHex, 16);
 
-        // Parsear la cadena del par hexadecimal a un valor entero
-        const hexPairValue = parseInt(hexPair, 16);
-        if (isNaN(hexPairValue)) {
-            // Proveer contexto sobre el par inválido y su posición
-            // La posición i+2 corresponde al inicio del par en el hash original
-            throw new Error(`Par hexadecimal inválido '${hexPair}' encontrado en la posición ${i + 2}.`);
+            if (isNaN(startIndex) || startIndex < 0 || startIndex >= vigenereKey.length) {
+                 return `Error: Índice inicial inválido (${startIndexHex}).`;
+            }
+
+            let decrypted = '';
+            // Recorre el resto de la cadena cifrada en pares de caracteres hexadecimales
+            for (let i = 2; i < encrypted.length; i += 2) {
+                // Obtiene el par hexadecimal
+                const hexPair = encrypted.substring(i, i + 2);
+                // Convierte el par hexadecimal a un valor numérico
+                const encryptedCharCode = parseInt(hexPair, 16);
+
+                if (isNaN(encryptedCharCode)) {
+                    return `Error: Carácter inválido encontrado ('${hexPair}' en la posición ${i}).`;
+                }
+
+                // Realiza la operación XOR con el carácter correspondiente de la clave Vigenere
+                const decryptedCharCode = encryptedCharCode ^ vigenereKey[startIndex % vigenereKey.length];
+                // Convierte el código de carácter resultante a un carácter y lo añade al resultado
+                decrypted += String.fromCharCode(decryptedCharCode);
+
+                // Incrementa el índice para el siguiente carácter de la clave
+                startIndex++;
+            }
+            return decrypted;
+        } catch (e) {
+            console.error("Error durante la decodificación:", e);
+            return `Error inesperado durante la decodificación. Detalles: ${e.message}`;
         }
-
-        // --- Realizar XOR y Añadir Resultado ---
-        // Realizar la operación XOR bit a bit
-        const decryptedCharCode = keyCharCode ^ hexPairValue;
-        // Convertir el código de carácter resultante de nuevo a un carácter y añadirlo
-        decryptedPassword += String.fromCharCode(decryptedCharCode);
-
-        // Incrementar el índice para el siguiente carácter en la xorKey
-        currentIndex++;
     }
 
-    // Devolver la cadena final con la contraseña descifrada
-    return decryptedPassword;
-}
+    // Event listener para el envío del formulario
+    decodeForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Evita que la página se recargue
+        const encryptedPassword = type7Input.value.trim();
+        const decryptedPassword = decodeType7(encryptedPassword);
+        resultOutput.value = decryptedPassword; // Muestra el resultado en el textarea
+    });
+});
