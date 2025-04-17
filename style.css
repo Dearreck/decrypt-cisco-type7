@@ -116,26 +116,29 @@ textarea[readonly] {
     font-weight: bold;
 }
 
-/* Estilos para los enlaces informativos adicionales */
+/* Estilos para los enlaces informativos adicionales (Lista con Emojis) */
 .info-links {
-    margin-top: 20px; /* Espacio sobre los enlaces */
-    padding-top: 15px; /* Espacio interno */
-    border-top: 1px solid #eee; /* Una línea separadora sutil */
-    text-align: left; /* Alinea el texto a la izquierda */
-    font-size: 0.9em; /* Tamaño de fuente ligeramente más pequeño */
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: left;
+    font-size: 0.9em;
+    list-style: none; /* IMPORTANTE: Quita los puntos/viñetas de la lista */
+    padding-left: 0;  /* IMPORTANTE: Quita el sangrado/padding izquierdo por defecto */
 }
 
-.info-links p {
-    margin: 0 0 8px 0; /* Espacio debajo de cada párrafo/enlace */
+.info-links li { /* Aplica el margen inferior a cada elemento de la lista */
+    margin-bottom: 10px; /* Espacio entre elementos de la lista */
 }
 
+/* Los estilos para 'a' dentro de .info-links generalmente pueden permanecer igual */
 .info-links a {
-    color: #0056b3; /* Color consistente con otros elementos */
-    text-decoration: none; /* Sin subrayado por defecto */
+    color: #0056b3;
+    text-decoration: none;
 }
 
 .info-links a:hover {
-    text-decoration: underline; /* Subrayado al pasar el ratón */
+    text-decoration: underline;
 }
 
 /* Footer */
